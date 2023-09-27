@@ -9,19 +9,15 @@ const auth =
   async (req: any, res: Response, next: NextFunction) => {
     return new Promise(async (resolve, reject) => {
       const token = req.headers.authorization;
-      console.log(token);
       if (!token) {
         return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized'));
       }
 
       const verifiedUser: IAuthUser = JwtHelper.verifyToken(token);
-      console.log(verifiedUser);
 
       if (!verifiedUser) {
         return reject(new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized'));
       }
-
-      console.log('failed to reach');
 
       req.user = verifiedUser;
 
